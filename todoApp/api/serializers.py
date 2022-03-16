@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Task
+from .models import Task, Category
 
 
-class TaskList(serializers.ModelSerializer):
+class TaskListSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source='category.title')
 
     class Meta:
         model = Task
