@@ -17,7 +17,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=200, verbose_name='عنوان')
     description = models.TextField(verbose_name='توضیحات')
-    category = models.ForeignKey('api.Category', on_delete=models.PROTECT, default='', related_name='categories', verbose_name='دسته بندی')
+    category = models.ForeignKey('api.Category', on_delete=models.PROTECT, default='', related_name='categories', null=True, verbose_name='دسته بندی')
     priority = models.CharField(max_length=3, choices=TASK_PRIORITY_CHOICES, default=MEDIUM, verbose_name='الویت')
     completed = models.BooleanField(default=False, verbose_name='تکمیل شده')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
