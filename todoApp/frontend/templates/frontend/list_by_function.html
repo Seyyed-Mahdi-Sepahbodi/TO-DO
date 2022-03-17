@@ -106,6 +106,7 @@
         }
         const csrftoken = getCookie('csrftoken');
 
+        var activeItem = null
 
         buildList()
 
@@ -128,19 +129,33 @@
                             <div style="flex:7">
                                 <span class="title">${list[i].title}</span>
                             </div>
-                            <div style="flex:2">
-                                <span class="title">${list[i].category}</span>
+                            <div style="flex:3">
+                                <span class="category">${list[i].category}</span>
                             </div>
                             <div style="flex:1">
-                                <button class="btn btn-sm btn-outline-info edit">ویرایش</button>
+                                <button class="btn btn-sm btn-outline-info complete-info">تکمیل</button>
                             </div>
                             <div style="flex:1">
-                                <button class="btn btn-sm btn-outline-dark delete">-</button>
+                                <button class="btn btn-sm btn-outline-warning edit">ویرایش</button>
+                            </div>
+                            <div style="flex:1">
+                                <button class="btn btn-sm btn-outline-dark delete">حذف</button>
                             </div>
                         </div>
                     `
                     wrapper.innerHTML += item
+
                 }
+
+                for (var i in list){
+                    var editBtn = document.getElementsByClassName('edit')[i]
+                    editBtn.addEventListener('click', (function(item){
+                        return function(){
+                            editItem(item)
+                        }
+                    })(list[i]))
+                }
+
             })
         }
 
@@ -150,6 +165,11 @@
             e.preventDefault()
             console.log('Form submited')
             var url = 'http://127.0.0.1:8000/api/function_base/create/'
+            if (activeItem != null){
+                var url =  `http://127.0.0.1:8000/api/function_base/update/${activeItem.id}/`
+                activeItem = null
+            }
+
             var title = document.getElementById('title').value
             fetch(url, {
                 method:'POST',
@@ -163,6 +183,12 @@
                 document.getElementById('form').reset()
             })
         })
+
+        function editItem(item){
+            console.log('Item clicked', item)
+            activeItem = item
+            document.getElementById('title').value = activeItem.title
+        }
 
     </script>
 

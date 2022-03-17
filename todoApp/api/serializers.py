@@ -7,16 +7,26 @@ class TaskListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ['title', 'category', 'priority', 'completed']
+        fields = ['id', 'title', 'category', 'priority', 'completed']
 
 
 class TaskCreateSerializer(serializers.Serializer):
     title = serializers.CharField()
 
     def create(self, validated_data):
-        print(validated_data)
-        print(validated_data['title'])
         task = Task(title=validated_data['title'])
         task.save()
-        print(task)
         return task
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.save()
+        return instance
+
+
+# class TaskUpdateSerializer(serializers.ModelSerializer):
+
+#     class Meta:
+#         model = Task
+#         fields = ['title']
+
