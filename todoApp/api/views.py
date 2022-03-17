@@ -14,10 +14,18 @@ def task_list_view(request):
     return Response(serializer.data)
 
 
-class TaskListViewByAPIView(APIView):
+class TaskListCreateViewByAPIView(APIView):
     def get(self, request):
         tasks = Task.objects.all().order_by('-id')
         serializer = TaskListSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = TaskCreateSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+
         return Response(serializer.data)
 
 
