@@ -16,8 +16,11 @@ def task_list_view(request):
 
 @api_view(['POST'])
 def task_create_view(request):
+    print("createeeeeee")
+    print(request.data)
     serializer = TaskCreateSerializer(data=request.data)
 
+    print(serializer.is_valid())
     if serializer.is_valid():
         serializer.save()
     
@@ -26,6 +29,7 @@ def task_create_view(request):
 
 @api_view(['POST'])
 def task_update_view(request, pk):
+    print("updateeeeee")
     task = Task.objects.get(id=pk)
     serializer = TaskCreateSerializer(instance=task, data=request.data)
 
@@ -33,6 +37,14 @@ def task_update_view(request, pk):
         serializer.save()
     
     return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def task_delete_view(request, pk):
+    task = Task.objects.get(id=pk)
+    task.delete()
+
+    return Response('Item successfully delete!')
 
 
 class TaskListCreateViewByAPIView(APIView):
@@ -48,6 +60,3 @@ class TaskListCreateViewByAPIView(APIView):
             serializer.save()
 
         return Response(serializer.data)
-
-
-
