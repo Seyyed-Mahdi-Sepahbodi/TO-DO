@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from .models import Task
 from .serializers import TaskCreateSerializer, TaskListSerializer
@@ -51,7 +52,7 @@ def task_delete_view(request, pk):
 # -----------------------------------------------------------------------------
 
 
-# class-base views base on APIView class
+# class-base views based on APIView class
 # -----------------------------------------------------------------------------
 class TaskListCreateViewByAPIView(APIView):
     def get(self, request):
@@ -87,3 +88,13 @@ class TaskUpdateDeleteByAPIView(APIView):
         return Response('Item successfully delete!')
 
 # -----------------------------------------------------------------------------
+
+# class-base views based on generic api views
+# -----------------------------------------------------------------------------
+class TaskListCreateByGenericApiViews(ListCreateAPIView):
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            serializer_class = TaskListSerializer
+        else:
+            serializer_class = TaskCreateSerializer
+        return serializer_class

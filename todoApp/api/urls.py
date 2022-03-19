@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import (TaskListCreateViewByAPIView, task_create_view,
-                    task_delete_view, task_list_view, task_update_view, TaskUpdateDeleteByAPIView)
+from .views import (TaskListCreateViewByAPIView, TaskUpdateDeleteByAPIView,
+                    task_create_view, task_delete_view, task_list_view,
+                    task_update_view)
 
 urlpatterns = [
     path('function_base/list/', task_list_view, name='function_task_list'),

@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import list_functional_view, ListClassView
+
+from .views import ListClassView, list_functional_view
 
 urlpatterns = [
     path('function_base/', list_functional_view, name='function_base_list_page'),
