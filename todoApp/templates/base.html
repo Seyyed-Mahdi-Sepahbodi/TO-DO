@@ -19,36 +19,23 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
     <link rel="stylesheet" href="{% static 'frontend/css/list_page_style.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/css/navbar.css' %}">
 
 </head>
 
 <body>
-    <div class="container">
-        <div id="task-container">
-            <div id="form-wrapper">
-                <form id="form">
-                    <div class="flex-wrapper">
-                        <div style="flex: 6">
-                            <input id="title" class=form-control type="text" name="title"
-                                placeholder="اضافه کردن کار جدید">
-                        </div>
-                        <div style="flex: 1">
-                            <input id="submit" class="btn" type="submit" value="ثبت کردن">
-                        </div>
-                    </div>
-                </form>
-            </div>
+    {% include 'includes/navbar.html' %}
 
-            <div id="list-wrapper">
-
-            </div>
-        </div>
-    </div>
+    {% block content %}
+    
+    {% endblock content %}
+ 
 
     {% block js_script %}
         
     {% endblock js_script %}
 
+    
 </body>
 
 </html>

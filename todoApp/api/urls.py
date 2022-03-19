@@ -4,6 +4,7 @@ from .views import (TaskListCreateViewByAPIView, TaskUpdateDeleteByAPIView,
                     task_create_view, task_delete_view, task_list_view,
                     task_update_view)
 
+app_name = 'api'
 urlpatterns = [
     path('function_base/list/', task_list_view, name='function_task_list'),
     path('function_base/create/', task_create_view, name='function_task_create'),
