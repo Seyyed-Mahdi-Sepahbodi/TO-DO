@@ -1,41 +1,43 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from .serializers import TaskListSerializer, TaskCreateSerializer
-from .models import Task
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .models import Task
+from .serializers import TaskCreateSerializer, TaskListSerializer
+
 # Create your views here.
 
+
+# function-base views
+# -----------------------------------------------------------------------------
 @api_view(['GET'])
 def task_list_view(request):
-    tasks = Task.objects.all().order_by('-id')
+    tasks = Task.objects.all().order_by('-created_at')
     serializer = TaskListSerializer(tasks, many=True)
     return Response(serializer.data)
 
 
 @api_view(['POST'])
 def task_create_view(request):
-    print("createeeeeee")
     print(request.data)
     serializer = TaskCreateSerializer(data=request.data)
 
     print(serializer.is_valid())
     if serializer.is_valid():
         serializer.save()
-    
+
     return Response(serializer.data)
 
 
 @api_view(['POST'])
 def task_update_view(request, pk):
-    print("updateeeeee")
     task = Task.objects.get(id=pk)
     serializer = TaskCreateSerializer(instance=task, data=request.data)
 
     if serializer.is_valid():
         serializer.save()
-    
+
     return Response(serializer.data)
 
 
@@ -46,7 +48,11 @@ def task_delete_view(request, pk):
 
     return Response('Item successfully delete!')
 
+# -----------------------------------------------------------------------------
 
+
+# class-base views base on APIView class
+# -----------------------------------------------------------------------------
 class TaskListCreateViewByAPIView(APIView):
     def get(self, request):
         tasks = Task.objects.all().order_by('-id')
@@ -60,3 +66,24 @@ class TaskListCreateViewByAPIView(APIView):
             serializer.save()
 
         return Response(serializer.data)
+
+
+class TaskUpdateDeleteByAPIView(APIView):
+
+    def post(self, request, pk):
+        data = request.data
+        task = Task.objects.get(id=pk)
+        serializer = TaskCreateSerializer(task, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        task = Task.objects.get(id=pk)
+        task.delete()
+
+        return Response('Item successfully delete!')
+
+# -----------------------------------------------------------------------------
