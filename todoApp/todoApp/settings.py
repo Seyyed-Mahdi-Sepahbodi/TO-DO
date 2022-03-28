@@ -37,14 +37,36 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # third party apps
     'rest_framework',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.google',
 
     # my apps
     'api.apps.ApiConfig',
     'frontend.apps.FrontendConfig',
 ]
+
+SITE_ID = 1
+
+# # Provider specific settings
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '123',
+#             'secret': '456',
+#             'key': ''
+#         }
+#     }
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,3 +154,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# EMAIL_SETTINGS
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_SERVER = 'localhost'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'seyyedmahdisepahbodi@gmail.com'
+EMAIL_HOST_PASSWORD = 'tgvftolssgxuuvub'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'seyyedmahdisepahbodi@gmail.com'
+
+# LOGIN REDIRECT URL
+LOGIN_REDIRECT_URL = '/'
+
+# DJANGO REST FRAMEWORK SETTINGS
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
