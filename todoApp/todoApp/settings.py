@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # third party apps
     'rest_framework',
+    'widget_tweaks',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
