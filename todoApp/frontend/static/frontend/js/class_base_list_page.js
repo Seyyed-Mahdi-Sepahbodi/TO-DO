@@ -28,7 +28,6 @@ function buildList() {
     fetch(url)
         .then((resp) => resp.json())
         .then(function (data) {
-            console.log('Data', data)
 
             var list = data
             for (var i in list) {
@@ -53,7 +52,7 @@ function buildList() {
                         <span class="category">${list[i].category}</span>
                     </div>
                     <div style="flex:1">
-                        <button class="btn btn-sm btn-outline-info complete-info">تکمیل</button>
+                        <button type="button" class="btn btn-sm btn-outline-info complete-info" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">تکمیل</button>
                     </div>
                     <div style="flex:1">
                         <button class="btn btn-sm btn-outline-warning edit">ویرایش</button>
@@ -77,12 +76,19 @@ function buildList() {
 
             for (var i in list) {
                 var editBtn = document.getElementsByClassName('edit')[i]
+                var completeBtn = document.getElementsByClassName('complete-info')[i]
                 var deleteBtn = document.getElementsByClassName('delete')[i]
                 var title = document.getElementsByClassName('title')[i]
 
                 editBtn.addEventListener('click', (function (item) {
                     return function () {
                         editItem(item)
+                    }
+                })(list[i]))
+
+                completeBtn.addEventListener('click', (function (item) {
+                    return function () {
+                        completeInfo(item)
                     }
                 })(list[i]))
 
@@ -106,7 +112,6 @@ function buildList() {
 var form = document.getElementById('form-wrapper')
 form.addEventListener('submit', function (e) {
     e.preventDefault()
-    console.log('Form submited')
     var title = document.getElementById('title').value
     var url = 'http://127.0.0.1:8000/api/class_base/apiview/list_create/'
     if (activeItem != null) {
@@ -143,13 +148,75 @@ form.addEventListener('submit', function (e) {
 })
 
 function editItem(item) {
-    console.log('Item clicked', item)
     activeItem = item
     document.getElementById('title').value = activeItem.title
 }
 
+function completeInfo(item) {
+    document.getElementById('description').value = item.description
+    document.getElementById('category').value = item.category
+    if (item.priority == 'HIG') {
+        p = 'بالا'
+    }else if (item.priority == 'MED') {
+        p = 'متوسط'
+    }else {
+        p = 'پایین'
+    }
+    console.log(document.getElementById('priority').value)
+    document.getElementById('priority').value = document.getElementById(p).value
+    var url = 'http://127.0.0.1:8000/api/class_base/apiview/category/list/'
+
+    fetch(url)
+    .then((resp) => resp.json())
+    .then(function (data) {
+        var list = data
+        var modal_submit = document.getElementById('modal-submit')
+
+        modal_submit.addEventListener("click", submitInfo);
+
+        function submitInfo() {
+            console.log('hellllllo')
+            var description = document.getElementById('description').value
+            var p = document.getElementById('priority').value
+
+            if (p == 'بالا') {
+                priority = 'HIG'
+            } else if (p == 'متوسط') {
+                priority = 'MED'
+            } else {
+                priority = 'LOW'
+            }
+
+            for (var i in list) {
+                if (list[i].title == document.getElementById('category').value) {
+                    var category = list[i]['title']
+                }
+            }
+            var url = `http://127.0.0.1:8000/api/class_base/apiview/update_delete/${item.id}/`
+            // console.log(item.title, item.completed, description, category, priority)
+            console.log(item)
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({'title': item.title, 'completed': item.completed, 'description': description, 'category': category, 'priority': priority })
+            }).then(function (response) {
+                buildList()
+                // document.getElementById('modal-form').reset()
+            })
+            // activeItem = null
+        }
+
+    })
+
+
+
+
+}
+
 function deleteItem(item) {
-    console.log('Delete')
     var url = `http://127.0.0.1:8000/api/class_base/apiview/update_delete/${item.id}/`
     fetch(url, {
         method: 'DELETE',
@@ -163,7 +230,6 @@ function deleteItem(item) {
 }
 
 function strikeUnstrike(item) {
-    console.log('Stricked')
 
     item.completed = !item.completed
     var url = `http://127.0.0.1:8000/api/class_base/apiview/update_delete/${item.id}/`
@@ -181,3 +247,4 @@ function strikeUnstrike(item) {
         buildList()
     })
 }
+

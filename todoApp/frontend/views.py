@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from rest_framework import permissions
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from api.models import Category, Task
 
 # Create your views here.
 
@@ -19,4 +20,12 @@ def list_functional_view(request):
 class ListClassView(LoginRequiredMixin, View):
 
     def get(self, request):
-        return render(request, 'frontend/list_by_api_class_view.html')
+        categories = Category.objects.all()
+        task = Task.objects.all().first()
+        priority = []
+        for i in range(3):
+            print(task.TASK_PRIORITY_CHOICES[i][1])
+            priority.append(task.TASK_PRIORITY_CHOICES[i][1])
+
+        print(task)
+        return render(request, 'frontend/list_by_api_class_view.html', {'categories':categories, 'priority':priority})

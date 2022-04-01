@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-from .models import Task
-from .serializers import TaskCreateSerializer, TaskListSerializer
+from .models import Task, Category
+from .serializers import TaskCreateSerializer, TaskListSerializer, CategoryListSerializer
 
 # Create your views here.
 
@@ -87,6 +87,13 @@ class TaskUpdateDeleteByAPIView(APIView):
 
         return Response('Item successfully delete!')
 
+
+class CategoryListByAPIView(APIView):
+
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategoryListSerializer(categories, many=True)
+        return Response(serializer.data)
 # -----------------------------------------------------------------------------
 
 # class-base views based on generic api views
