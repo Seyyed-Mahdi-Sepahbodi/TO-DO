@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from allauth.account.views import LoginView, SignupView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('user/login/', LoginView.as_view(), name="user_login"),
+    path('user/signup/', SignupView.as_view(), name="user_signup"),
+    path('user/logout/', LogoutView.as_view(), name="user_logout"),
+    # path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
     path('', include('frontend.urls')),
 ]

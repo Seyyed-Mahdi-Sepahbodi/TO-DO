@@ -5,9 +5,17 @@
 <title>Home Page</title>
 {% endblock title %}
 
+{% block style_files %}
+<link rel="stylesheet" href="{% static 'frontend/css/custom.css' %}">
+{% endblock style_files %}
+
 {% block content %}
 <div class="container">
-    <div id="task-container">
+    <div id="typeboxcontainer">
+        <h1>!Hello Friend</h1>
+        <h2>.My name is Mahdi</h2>
+        <div class="typecontainer">
+        <div class="typed-out">Welcome to my To-Do web application</div></div>
     </div>
 </div>
 {% endblock content %}

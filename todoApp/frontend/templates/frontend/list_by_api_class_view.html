@@ -29,6 +29,51 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="modal-form">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">توضیح:</label>
+            <textarea  id="description" type="text" class="form-control" id="recipient-name"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">دسته بندی:</label>
+            <select name="category" id="category">
+                {% for category in categories %}
+                    <option id="{{ category.title }}" value="{{ category.title }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">الویت:</label>
+            <select name="priority" id="priority">
+                
+                {% for p in priority %}
+                    <option id="{{ p }}" value="{{ p }}">{{ p }}</option>
+                {% endfor %}
+                    
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">انصراف</button>
+        <button type="button" class="btn btn-primary" id="modal-submit" data-dismiss="modal">ثبت</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 
 

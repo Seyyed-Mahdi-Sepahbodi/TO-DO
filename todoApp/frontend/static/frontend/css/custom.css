@@ -1,0 +1,49 @@
+#typeboxcontainer{
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 14px 20px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    color:#999;
+    background:rgba(0, 0, 0, 0.5);
+    margin-top: 100px;
+    margin-bottom: 100px;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+.typecontainer{
+  display: inline-block;
+}
+.typed-out{
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    animation: 
+      typing 1s forwards;
+    font-size: 1.6rem;
+    width: 0;
+}
+@keyframes typing {
+from { width: 0 }
+to { width: 100% }
+}
+
+#logout-btn{
+  background-color: aqua;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: none;
+}
+#login-btn{
+  background-color: aqua;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: none;
+}
+#register-btn{
+  background-color: aqua;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: none;
+}
