@@ -26,7 +26,6 @@ class TaskCreateSerializer(serializers.Serializer):
         return task
 
     def update(self, instance, validated_data):
-        print(validated_data)
         category = Category.objects.get(title=validated_data.get('category', instance.category))
 
         instance.title = validated_data.get('title', instance.title)

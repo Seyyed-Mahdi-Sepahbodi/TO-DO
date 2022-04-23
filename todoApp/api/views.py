@@ -21,10 +21,8 @@ def task_list_view(request):
 
 @api_view(['POST'])
 def task_create_view(request):
-    print(request.data)
     serializer = TaskCreateSerializer(data=request.data)
 
-    print(serializer.is_valid())
     if serializer.is_valid():
         serializer.save()
 

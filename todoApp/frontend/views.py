@@ -24,8 +24,6 @@ class ListClassView(LoginRequiredMixin, View):
         task = Task.objects.all().first()
         priority = []
         for i in range(3):
-            print(task.TASK_PRIORITY_CHOICES[i][1])
             priority.append(task.TASK_PRIORITY_CHOICES[i][1])
 
-        print(task)
         return render(request, 'frontend/list_by_api_class_view.html', {'categories':categories, 'priority':priority})
